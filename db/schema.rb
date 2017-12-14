@@ -66,9 +66,10 @@ ActiveRecord::Schema.define(version: 20171210045408) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer  "room_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "room_id",     null: false
+    t.integer  "room_number", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end
