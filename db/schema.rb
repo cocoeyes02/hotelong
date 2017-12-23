@@ -26,11 +26,12 @@ ActiveRecord::Schema.define(version: 20171210045408) do
 
   create_table "members", force: :cascade do |t|
     t.string   "user_id",                         null: false
-    t.string   "password",                        null: false
+    t.string   "hashed_password",                 null: false
     t.string   "name",                            null: false
+    t.integer  "sex",                             null: false
     t.string   "address",                         null: false
-    t.integer  "tel",                             null: false
-    t.integer  "age",                             null: false
+    t.string   "tel",                             null: false
+    t.date     "birthday",                        null: false
     t.string   "email",                           null: false
     t.boolean  "admin_authority", default: false, null: false
     t.datetime "created_at",                      null: false
@@ -66,10 +67,10 @@ ActiveRecord::Schema.define(version: 20171210045408) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.integer  "room_id",     null: false
-    t.integer  "room_number", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "class_room_id", null: false
+    t.integer  "room_number",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end
