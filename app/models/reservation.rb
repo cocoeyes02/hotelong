@@ -19,4 +19,21 @@ class Reservation < ActiveRecord::Base
   has_many :rooms
   has_many :plans
   has_many :members
+
+  def self.isEmptyRoomByRoomNumber(room_number, date)
+    # TODO: room_numberとdateの値チェック
+    @reservations = Reservation.joins('INNER JOIN rooms ON rooms.id = reservations.room_id')
+                      .select('reservations.start_date, reservations.end_date, rooms.room_number')
+                      .where(rooms: { room_number: room_number })
+    if @reservations.nil?
+      return true
+    end
+    @reservations.each do |reservation|
+      # チェックアウト日にチェックインすることはできる
+      if reservation.start_date <= date && date < reservation.end_date
+        return false
+      end
+    end
+    return true
+  end
 end
