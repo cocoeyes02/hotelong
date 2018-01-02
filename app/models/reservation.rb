@@ -16,4 +16,7 @@
 #
 
 class Reservation < ActiveRecord::Base
+  has_many :rooms
+  has_many :plans
+  has_many :members
 end

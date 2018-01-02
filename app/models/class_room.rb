@@ -14,4 +14,5 @@
 #
 
 class ClassRoom < ActiveRecord::Base
+  belongs_to :room
 end

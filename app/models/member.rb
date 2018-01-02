@@ -17,6 +17,7 @@
 #
 
 class Member < ActiveRecord::Base
+  belongs_to :reservation
   attr_accessor :password
 
   def password=(val)
