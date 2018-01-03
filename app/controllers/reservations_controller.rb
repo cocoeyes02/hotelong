@@ -1,7 +1,5 @@
 class ReservationsController < ApplicationController
   def index
-    @reservations = Reservation.order('id')
-    @rooms = Room.order('id')
   end
 
   def show

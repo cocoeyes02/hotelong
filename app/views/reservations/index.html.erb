@@ -1,23 +1,2 @@
-<h1>ホテル予約一覧</h1>
-<table>
-  <tr>
-    <th>部屋番号</th>
-    <% 28.times do |i| %>
-      <th><%= (Date.today + i.day).strftime('%m/%d') %></th>
-    <% end %>
-  </tr>
-  <% @rooms.each do |room| %>
-    <tr>
-      <td><%= room.room_number %></td>
-      <% 28.times do |i| %>
-        <td>
-          <% if Reservation.isEmptyRoomByRoomNumber(room.room_number, Date.today + i.day) %>
-            ○
-          <% else %>
-            ×
-          <% end %>
-        </td>
-      <% end %>
-    </tr>
-  <% end %>
-</table>
+<h1>Reservation#index</h1>
+<p>Find me in app/views/reservations/index.html.erb</p>

@@ -1,0 +1,24 @@
+<h1>ホテル予約一覧</h1>
+<%= render 'search'%>
+<table>
+  <tr>
+    <th>部屋番号</th>
+    <% 28.times do |i| %>
+      <th><%= (Date.today + i.day).strftime('%m/%d') %></th>
+    <% end %>
+  </tr>
+  <% Array(@rooms).each do |room| %>
+    <tr>
+      <td><%= room.room_number %></td>
+      <% 28.times do |i| %>
+        <td>
+          <% if Reservation.isEmptyRoomByRoomNumber(room.room_number, Date.today + i.day) %>
+              ○
+          <% else %>
+              ×
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

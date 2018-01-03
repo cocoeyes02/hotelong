@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  root "reservations#index" # TODO:システム合体時にTOPページに変更する
+  root 'rooms#index' # TODO:システム合体時にTOPページに変更する
 
-  resources :reservations
+  resource :rooms, only: [:index, :show] do
+    collection { get 'search'}
+  end
 end
