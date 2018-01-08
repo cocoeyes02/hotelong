@@ -13,7 +13,7 @@
       <% 28.times do |i| %>
         <td>
           <% if Reservation.isEmptyRoomByRoomNumber(room.room_number, Date.today + i.day) %>
-              ○
+              <%= link_to '○', room %>
           <% else %>
               ×
           <% end %>

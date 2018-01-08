@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20171210045408) do
     t.integer  "person_price",                 null: false
     t.string   "style_name",                   null: false
     t.integer  "expect_count",                 null: false
-    t.integer  "can_add_bed",                  null: false
+    t.boolean  "can_add_bed",                  null: false
     t.float    "discount_rate",  default: 1.0, null: false
     t.float    "surcharge_rate", default: 1.0, null: false
     t.datetime "created_at",                   null: false

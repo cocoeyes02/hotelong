@@ -1,2 +1,49 @@
-<h1>Room#show</h1>
-<p>Find me in app/views/room/show.html.erb</p>
+<h1>部屋詳細</h1>
+<table>
+  <tr>
+    <th>部屋番号</th>
+    <th>一人あたりの価格</th>
+    <th>部屋の形式</th>
+    <th>標準宿泊人数</th>
+    <th>エキストラベット</th>
+  </tr>
+  <tr>
+    <td><%= @room.room_number %></td>
+    <td><%= @room.person_price %></td>
+    <td><%= @room.style_name %></td>
+    <td><%= @room.expect_count %>人</td>
+    <td>
+      <% if @room.can_add_bed? %>
+        あり
+      <% else %>
+        なし
+      <% end %>
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th>指定できるプラン</th>
+    <th>価格</th>
+    <th>宿泊人数</th>
+  </tr>
+  <% @plans.each do |plan| %>
+    <% # ノープランは表示しない
+    if plan.id == 1
+      next
+    end
+    %>
+    <tr>
+      <td>
+        <%= plan.name %>
+      </td>
+      <td>
+        <%= plan.price %>
+      </td>
+      <td>
+        <%= plan.apply_count %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<p><%= link_to 'この部屋に宿泊する', '#' %></p>

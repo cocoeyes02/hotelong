@@ -6,7 +6,7 @@
 #  person_price   :integer          not null
 #  style_name     :string           not null
 #  expect_count   :integer          not null
-#  can_add_bed    :integer          not null
+#  can_add_bed    :boolean          not null
 #  discount_rate  :float            default(1.0), not null
 #  surcharge_rate :float            default(1.0), not null
 #  created_at     :datetime         not null
