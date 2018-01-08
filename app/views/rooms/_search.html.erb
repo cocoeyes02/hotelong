@@ -1,9 +1,9 @@
 <%= form_for Array(@room), url: search_rooms_path, method: :get do |form| %>
-    <p><%= form.label :price, '予算' %>
+    <p><%= form.label :price, '一人当たりの予算' %>
        <%= form.text_field 'price' %></p>
-    <p><%= form.label :person, '人数' %>
+    <p><%= form.label :person, '宿泊人数' %>
        <%= form.text_field 'person' %></p>
-    <p><%= form.label :date, '期間' %>
+    <p><%= form.label :date,'宿泊期間' %>
        <%= form.date_select :start_date,
            start_year: Date.today.year, start_month: Date.today.month,
             start_day: Date.today.day, use_month_numebrs: true %>〜
@@ -12,7 +12,7 @@
                             start_day: Date.today.day, use_month_numebrs: true %>
     </p>
     <p><%= form.label :plan, 'プラン' %>
-       <%= form.select :plan, @options, { prompt: '選択してください' } %></p>
+       <%= form.select :plan, @options %></p>
     <p>
     <%= form.radio_button :condition, 'and' %>
         <%= form.label :condition_and, 'AND' %>

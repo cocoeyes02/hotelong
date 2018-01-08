@@ -22,21 +22,33 @@ class Search::Room < Search::Base
   def matches
     results = ::Room.all
     if condition == 'and'
-      results = results.joins(:class_room).where('class_rooms.price <= ?', price) if price.present?
-      results = results.joins(:class_room).where('class_rooms.person = ?', person) if person.present?
-      results = results.joins(:plan).where('plans.id = ?', plan) if plan.present?
-      results = results.joins('JOIN reservations ON reservations.room_id = rooms.id')
-                  .where('(reservations.start_date > ?) AND (reservations.end_date <= ?)', end_date, start_date)
-                  .select('reservations.start_date, reservations.end_date') if start_date.present? && end_date.present?
+      # ノープランの時はperson_priceから計算する
+      results = results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.person_price <= ?', price.to_i) if price.present? && plan.to_i == 1
+      # プラン選択時にはプラン料金から計算する
+      results = results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id',
+                              'JOIN plan_rooms ON plan_rooms.room_id = rooms.id',
+                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ? AND plans.price / apply_count <= ?', plan.to_i, price.to_i) if price.present? && plan.to_i != 1
+      results = results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.expect_count = ? OR (class_rooms.expect_count = ? AND class_rooms.can_add_bed = ?)', person.to_i, person.to_i+ 1, true) if person.present?
+      results = results.joins('JOIN plan_rooms ON plan_rooms.room_id = rooms.id',
+                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ?', plan.to_i)
+      results = results.where(room_number: Reservation.emptyRoomNumberListByDate(start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))) if start_date.present? && end_date.present?
     end
     if condition == 'or'
-      results = nil
-      results.push(results.joins(:class_room).where('class_rooms.price <= ?', price)).uniq if price.present?
-      results.push(results.joins(:class_room).where('class_rooms.person = ?', person)).uniq if person.present?
-      results.push(results.joins(:plan).where('plans.id' => plan)). if plan.present?
-      results.push(results.joins('JOIN reservations ON reservations.room_id = rooms.id')
-                    .where('(reservations.start_date > ?) AND (reservations.end_date <= ?)',
-                           end_date, start_date)).uniq if start_date.present? && end_date.present?
+      result_ids = []
+      # ノープランの時はperson_priceから計算する
+      result_ids.push(results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.person_price <= ?', price.to_i).pluck(:id)) if price.present? && plan.to_i == 1
+      # プラン選択時にはプラン料金から計算する
+      result_ids.push(results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id',
+                              'JOIN plan_rooms ON plan_rooms.room_id = rooms.id',
+                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ? AND plans.price / apply_count <= ?', plan.to_i, price.to_i).pluck(:id)) if price.present? && plan.to_i != 1
+      result_ids.push(results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.expect_count = ? OR (class_rooms.expect_count = ? AND class_rooms.can_add_bed = ?)', person.to_i, person.to_i+ 1, true).pluck(:id)) if person.present?
+      # ノープランはどの部屋にもあるので検索条件から外す
+      result_ids.push(results.joins('JOIN plan_rooms ON plan_rooms.room_id = rooms.id',
+                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ?', plan.to_i).pluck(:id)) if plan.to_i != 1
+      result_ids.push(results.where(room_number: Reservation.emptyRoomNumberListByDate(start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))).pluck(:id)) if start_date.present? && end_date.present?
+      result_ids.flatten!
+      result_ids.uniq!
+      results = results.where(id: result_ids)
     end
     results
   end
