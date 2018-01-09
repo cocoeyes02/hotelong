@@ -8,6 +8,7 @@ class Search::Room < Search::Base
     condition
   )
   attr_accessor(*ATTRIBUTES)
+  # TODO: 検索バリデーションの追加
 
   def initialize(params = {})
     if params.is_a?(ActionController::Parameters)

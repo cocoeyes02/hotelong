@@ -8,6 +8,11 @@ class RoomsController < ApplicationController
   def show
     @room = Room.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').select('rooms.*, class_rooms.*').find(params[:id])
     @plans = PlanRoom.joins('JOIN plans ON plans.id = plan_rooms.plan_id').select('plans.*').where('plan_rooms.room_id = ?', params[:id])
+    @options = PlanRoom.joins('JOIN plans ON plans.id = plan_rooms.plan_id').select('plans.*').where('plan_rooms.room_id = ?', params[:id]).pluck('plans.name, plans.id')
+    session[:options] = @options
+    session[:room] = @room.id
+    # TODO: ログイン情報から取得
+    session[:member] = 1
   end
 
   def search

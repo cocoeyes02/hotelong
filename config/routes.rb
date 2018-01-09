@@ -4,4 +4,7 @@ Rails.application.routes.draw do
   resources :rooms, only: [:index, :show] do
     collection { get 'search'}
   end
+  resources :reservations do
+    collection { post 'confirm'}
+  end
 end

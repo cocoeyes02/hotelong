@@ -6,6 +6,11 @@ class ReservationsController < ApplicationController
   end
 
   def new
+    @reservation = Reservation.new()
+    # TODO: セッションがなかった時のエラー処理
+    @options = session[:options]
+    @room_id = session[:room]
+    @member_id = session[:member]
   end
 
   def confirm
