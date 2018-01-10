@@ -4,7 +4,7 @@ class Search::Room < Search::Base
     person
     start_date
     end_date
-    plan
+    plans
     condition
   )
   attr_accessor(*ATTRIBUTES)

@@ -11,8 +11,8 @@
                             start_year: Date.today.year, start_month: Date.today.month,
                             start_day: Date.today.day, use_month_numebrs: true %>
     </p>
-    <p><%= form.label :plan, 'プラン' %>
-       <%= form.select :plan, @options %></p>
+    <p><%= form.label :plans, 'プラン' %>
+       <%= form.select :plans, @options %></p>
     <p>
     <%= form.radio_button :condition, 'and' %>
         <%= form.label :condition_and, 'AND' %>

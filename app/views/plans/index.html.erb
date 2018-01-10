@@ -1,0 +1,15 @@
+<h1>プラン一覧</h1>
+<% @plans.each do |plan| %>
+  <table>
+    <tr>
+      <th>プラン名</th>
+      <th>利用可能人数</th>
+      <th>値段</th>
+    </tr>
+    <tr>
+      <td><%= plan.name %></td>
+      <td><%= plan.apply_count %></td>
+      <td><%= plan.price %></td>
+    </tr>
+  </table>
+<% end %>

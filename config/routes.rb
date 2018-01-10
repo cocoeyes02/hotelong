@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   resources :reservations do
     collection { post 'confirm'}
   end
+  resources :plans do
+    collection { post 'confirm'}
+  end
 end

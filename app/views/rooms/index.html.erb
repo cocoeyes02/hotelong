@@ -1,6 +1,7 @@
 <h1>ホテル予約一覧</h1>
 <% if flash.notice %><p><%= flash.notice %></p><% end %>
 <%= render 'search'%>
+<p><%= link_to 'プラン一覧', :plans %></p>
 <table>
   <tr>
     <th>部屋番号</th>
