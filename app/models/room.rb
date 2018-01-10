@@ -17,23 +17,23 @@ class Room < ActiveRecord::Base
   def self.calculate_sum_price(room_id, guest_count)
     # TODO: room_idとguest_countの値チェック
     @room = Room.joins('JOIN class_rooms ON rooms.class_room_id = class_rooms.id')
-               .select('rooms.*, class_rooms.*')
+               .select('class_rooms.expect_count, class_rooms.person_price, class_rooms.surcharge_rate, class_rooms.discount_rate')
                .where('rooms.id = ?', room_id).first
     if @room.nil?
       # TODO: エラー処理
     end
-    puts @room
-    sum_price = @room.person_price * guest_count
-    if guest_count > @room.person_price
-      0.upto(guest_count - @room.person_price) do
+    sum_price = @room.person_price
+    if guest_count < @room.expect_count
+      1.upto(@room.expect_count - guest_count) do
         sum_price = sum_price * @room.surcharge_rate
       end
     end
-    if guest_count < @room.person_price
-      0.upto(@room.person_price - guest_count) do
+    if guest_count > @room.expect_count
+      1.upto(guest_count - @room.expect_count) do
         sum_price = sum_price * @room.discount_rate
       end
     end
+    sum_price = sum_price * guest_count
     return sum_price
   end
 end

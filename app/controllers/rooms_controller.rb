@@ -6,7 +6,9 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @room = Room.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').select('rooms.*, class_rooms.*').find(params[:id])
+    @room = Room.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').select(
+      'rooms.*, class_rooms.person_price, class_rooms.style_name, class_rooms.expect_count, class_rooms.can_add_bed'
+    ).find(params[:id])
     @plans = PlanRoom.joins('JOIN plans ON plans.id = plan_rooms.plan_id').select('plans.*').where('plan_rooms.room_id = ?', params[:id])
     @options = PlanRoom.joins('JOIN plans ON plans.id = plan_rooms.plan_id').select('plans.*').where('plan_rooms.room_id = ?', params[:id]).pluck('plans.name, plans.id')
     session[:options] = @options
