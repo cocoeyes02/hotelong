@@ -37,6 +37,14 @@ class Reservation < ActiveRecord::Base
     return true
   end
 
+  def self.isExtendOrNot(member_id, start_date)
+    @reservation = Reservation.find_by(member_id: member_id, end_date: start_date)
+    if @reservations.nil?
+      return false
+    end
+    return true
+  end
+
   def self.emptyRoomNumberListByDate(start_date, end_date)
 
     @no_empty_room_number_list = Reservation.joins('INNER JOIN rooms ON rooms.id = reservations.room_id')

@@ -14,8 +14,8 @@
     </tr>
     <tr>
       <th><%= form.label :sum_price, '宿泊料金'%></th>
-      <td><%= @sum_price.to_i %></td>
-      <%= form.hidden_field :sum_price, :value => @sum_price.to_i %>
+      <td><%= @sum_price %></td>
+      <%= form.hidden_field :sum_price, :value => @sum_price %>
     </tr>
     <tr>
       <th><%= form.label :plan_name, '選択プラン' %></th>
