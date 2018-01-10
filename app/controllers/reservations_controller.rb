@@ -24,7 +24,8 @@ class ReservationsController < ApplicationController
     if @reservation.plan_id.to_i == 1
       @sum_price = Room.calculate_sum_price(@reservation.room_id, @reservation.guest_count) * stay_date
     else
-      @sum_price = Plan.where(id: @reservation.plan_id.to_i).pluck(:price) * stay_date
+      plan = Plan.find_by(id: @reservation.plan_id.to_i)
+      @sum_price = plan.price * stay_date
     end
   end
 
