@@ -20,10 +20,22 @@ class Member < ActiveRecord::Base
   belongs_to :reservation
   attr_accessor :password
 
-  def password=(val)
-    if val.present?
-      self.hashed_password = BCrypt::Password.create(val)
+  class << self
+    def password=(val)
+      if val.present?
+        self.hashed_password = BCrypt::Password.create(val)
+      end
+      @password = val
     end
-    @password = val
+
+    def authenticate(user_id, password)
+      member = find_by(user_id: user_id)
+      if member && member.hashed_password.present? &&
+        BCrypt::Password.new(member.hashed_password) == password
+        member
+      else
+        nil
+      end
+    end
   end
 end
