@@ -14,7 +14,7 @@ class RoomsController < ApplicationController
     session[:options] = @options
     session[:room] = @room.id
     # TODO: ログイン情報から取得
-    session[:member] = 1
+    session[:members] = 1
   end
 
   def search

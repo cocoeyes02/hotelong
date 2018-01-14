@@ -1,6 +1,6 @@
 <h1>ようこそhotelongへ</h1>
 <h2>ログイン</h2>
-<% if flash.alert %><p class="alert"><%= flash.alert %></p><% end %>
+<% if flash.notice %><p><%= flash.notice %></p><% end %>
 <%= form_tag :sessions do %>
   <table id="login_form">
     <tr>

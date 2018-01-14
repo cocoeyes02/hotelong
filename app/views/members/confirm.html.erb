@@ -1,0 +1,54 @@
+<h1>新規会員登録確認画面</h1>
+
+<%= form_for @member do |form| %>
+  <table>
+  <tr>
+    <th><%= form.label :user_id %></th>
+    <td><%= @member.user_id %></td>
+    <%= form.hidden_field :user_id, :value => @member.user_id %>
+  </tr>
+  <tr>
+    <th><%= form.label :name %></th>
+    <td><%= @member.name %></td>
+    <%= form.hidden_field :name, :value => @member.name %>
+  </tr>
+  <tr>
+    <th><%= Member.human_attribute_name(:sex) %></th>
+    <td>
+      <% if @member.sex == 0 %>
+        男
+      <% else %>
+        女
+      <% end %>
+    </td>
+    <%= form.hidden_field :sex, :value => @member.sex %>
+  </tr>
+  <tr>
+    <th><%= form.label :tel %></th>
+    <td><%= @member.tel %></td>
+    <%= form.hidden_field :tel, :value => @member.tel %>
+  </tr>
+  <tr>
+    <th><%= form.label :address %></th>
+    <td><%= @member.address %></td>
+    <%= form.hidden_field :address, :value => @member.address %>
+  </tr>
+  <tr>
+    <th><%= form.label :birthday, for: 'member_birthday_1i' %></th>
+    <td><%= @member.birthday %></td>
+    <%= form.hidden_field :birthday, :value => @member.birthday %>
+  </tr>
+  <tr>
+    <th><%= form.label :email %></th>
+    <td><%= @member.email %></td>
+    <%= form.hidden_field :email, :value => @member.email %>
+  </tr>
+  <tr>
+    <th><%= form.label :password %></th>
+    <td><%= @member.password %></td>
+    <%= form.hidden_field :password, :value => @member.password %>
+  </tr>
+
+  <p><%= form.submit '登録する' %></p>
+<% end %>
+<button type="button" onclick="history.back()">戻る</button>
