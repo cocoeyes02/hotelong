@@ -10,8 +10,10 @@ Rails.application.routes.draw do
   resources :plans do
     collection { post 'confirm'}
   end
-  resources :sessions, only: [:create, :destroy]
+  resource :session, only: [:create, :destroy]
   resources :members do
     collection { post 'confirm'}
   end
+
+  resources :mypage, only: [:index]
 end

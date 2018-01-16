@@ -1,0 +1,15 @@
+<% if current_member %>
+  <p>
+    <%= current_member.name + 'さん' %> |
+    <%= link_to 'ログアウト', :session,
+                method: :delete, data: { confirm: 'ログアウトしますか？' } %>
+  </p>
+<% end %>
+
+<div class="menubar">
+<% if current_member %>
+<%= menu_link_to '部屋一覧', :rooms %>
+ | <%= menu_link_to 'プラン一覧', :plans %>
+ | <%= menu_link_to 'マイページ', mypage_index_path %>
+<% end %>
+</div>
