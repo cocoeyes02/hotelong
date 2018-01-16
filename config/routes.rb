@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :reservations do
     collection { post 'confirm'}
   end
-  resources :plans do
+  resources :plans, only: [:index] do
     collection { post 'confirm'}
   end
   resource :session, only: [:create, :destroy]
