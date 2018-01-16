@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   def show
+    @member = Member.find(params[:id])
   end
 
   def new
@@ -20,12 +21,23 @@ class MembersController < ApplicationController
   end
 
   def edit
+    @member = Member.find(params[:id])
   end
 
   def update
+    @member = Member.find(params[:id])
+    @member.assign_attributes(member_params)
+    if @member.save
+      redirect_to @member, notice: '会員情報を更新しました。'
+    else
+      render 'edit'
+    end
   end
 
-  def destory
+  def destroy
+    @member = Member.find(params[:id])
+    @member.destroy
+    redirect_to :root, notice: '退会しました。ご利用いただきありがとうございました。'
   end
 
   def member_params

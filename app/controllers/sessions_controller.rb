@@ -5,8 +5,7 @@ class SessionsController < ApplicationController
       session[:member_id] = member.id
       redirect_to :rooms
     else
-      flash.alert = 'ユーザIDとパスワードが一致しません'
-      redirect_to :root
+      redirect_to :root, notice: 'ユーザIDとパスワードが一致しません'
     end
   end
 
