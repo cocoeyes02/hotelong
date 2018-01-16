@@ -1,2 +1,21 @@
-<h1>Reservation#index</h1>
-<p>Find me in app/views/reservations/index.html.erb</p>
+<h1>予約一覧</h1>
+<table>
+  <tr>
+    <th>部屋番号</th>
+    <th>宿泊人数</th>
+    <th>価格</th>
+    <th>チェックイン日</th>
+    <th>チェックアウト日</th>
+  </tr>
+  <% @reservations.each do |reservation| %>
+    <% if reservation.is_extend == false %>
+      <tr>
+        <td><%= reservation.room_number %></td>
+        <td><%= reservation.guest_count %></td>
+        <td><%= reservation.sum_price %></td>
+        <td><%= reservation.start_date %></td>
+        <td><%= reservation.end_date %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

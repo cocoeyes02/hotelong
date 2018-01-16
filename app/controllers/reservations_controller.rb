@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
   def index
+    @reservations = Reservation.changeEndDateFromExtend(session[:member_id])
   end
 
   def show

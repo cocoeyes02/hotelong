@@ -5,7 +5,7 @@ guest_counts = %w(1 1 1 2 2 2 3 3 3 3)
 sum_prices = %w(10000 20000 10000 19800 19000 19900 19000 42720 21919 20900)
 start_dates = %w(2018-01-10 2018-01-12 2018-01-14 2018-01-20 2018-01-14 2018-01-12 2018-01-12 2018-01-13 2018-01-13 2018-01-13)
 end_dates = %w(2018-01-11 2018-01-14 2018-01-15 2018-01-21 2018-01-15 2018-01-13 2018-01-13 2018-01-15 2018-01-14 2018-01-14)
-is_extends = %w(false true true false false false false true false false)
+is_extends = %w(false false true false false false false true false false)
 
 0.upto(9) do |idx|
   Reservation.create(

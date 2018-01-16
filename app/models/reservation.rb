@@ -20,6 +20,25 @@ class Reservation < ActiveRecord::Base
   has_many :plans
   has_many :members
 
+  def self.changeEndDateFromExtend(member_id)
+    @reservations = Reservation.joins('INNER JOIN rooms ON rooms.id = reservations.room_id')
+                                   .select('reservations.*, rooms.*').where(member_id: member_id)
+    @reservations.each do |reservation|
+      # 連泊している宿泊データは結合する
+      if reservation.is_extend == false
+        @extend_reservation = @reservations.where(is_extend: true, member_id: member_id)
+        if @extend_reservation.present?
+          @extend_reservation.each do |extend|
+            # 部屋が同じで宿泊期間が隣接していたら同じ宿泊データとして宿泊機関を結合する
+            if extend.start_date == reservation.end_date && extend.room_id == reservation.room_id
+              reservation.end_date = extend.end_date
+            end
+          end
+        end
+      end
+    end
+    return @reservations
+  end
   def self.isEmptyRoomByRoomNumber(room_number, date)
     # TODO: room_numberとdateの値チェック
     @reservations = Reservation.joins('INNER JOIN rooms ON rooms.id = reservations.room_id')
@@ -38,11 +57,11 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.isExtendOrNot(member_id, start_date)
-    @reservation = Reservation.find_by(member_id: member_id, end_date: start_date)
-    if @reservations.nil?
-      return false
+    @reservation = Reservation.where(member_id: member_id, end_date: start_date)
+    if @reservations.present?
+      return true
     end
-    return true
+    return false
   end
 
   def self.emptyRoomNumberListByDate(start_date, end_date)
