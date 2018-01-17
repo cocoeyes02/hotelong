@@ -1,4 +1,5 @@
 <h2>新規会員登録入力</h2>
+<%= render 'shared/errors', obj: @member %>
 <%= form_for @member, url: confirm_members_path do |form| %>
   <table class="attr">
     <tr>

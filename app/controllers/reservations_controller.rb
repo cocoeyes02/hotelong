@@ -46,7 +46,7 @@ class ReservationsController < ApplicationController
     if @reservation.save
       redirect_to rooms_path, notice: '宿泊予約が完了しました。'
     else
-      redirect_to rooms_path, notice: '予約に失敗しました。運営者までご連絡ください。'
+      render 'new'
     end
   end
 

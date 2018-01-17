@@ -16,7 +16,7 @@ class MembersController < ApplicationController
     if @member.save
       redirect_to :root, notice: '新規会員登録が完了しました。'
     else
-      redirect_to :root, notice: '新規会員登録に失敗しました。運営者までご連絡ください。'
+      render 'new'
     end
   end
 
