@@ -19,6 +19,16 @@
 class Member < ActiveRecord::Base
   belongs_to :reservation
   attr_accessor :password
+  validates :user_id, presence: true,
+            uniqueness: true
+  validates :hashed_password, presence: true
+  validates :name, presence: true
+  validates :sex, presence: true
+  validates :address, presence: true
+  validates :tel, presence: true,
+            numericality: { only_integer: true }
+  validates :birthday, presence: true
+  validates :email, presence: true
 
   def password=(val)
     if val.present?

@@ -19,6 +19,18 @@ class Reservation < ActiveRecord::Base
   has_many :rooms
   has_many :plans
   has_many :members
+  validates :room_id, presence: true,
+            numericality: { only_integer: true }
+  validates :plan_id, presence: true,
+            numericality: { only_integer: true }
+  validates :member_id, presence: true,
+            numericality: { only_integer: true }
+  validates :guest_count, presence: true,
+            numericality: { only_integer: true }
+  validates :sum_price, presence: true,
+            numericality: { only_integer: true }
+  validates :start_date, presence: true
+  validates :end_date, presence: true
 
   def self.searchExtendId(member_id, room_id, first_id)
     extendIds = []

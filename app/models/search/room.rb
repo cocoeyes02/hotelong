@@ -8,7 +8,9 @@ class Search::Room < Search::Base
     condition
   )
   attr_accessor(*ATTRIBUTES)
-  # TODO: 検索バリデーションの追加
+  validates :price, numericality: { only_integer: true }
+  validates :person, numericality: { only_integer: true }
+  validates :condition, presence: true
 
   def initialize(params = {})
     if params.is_a?(ActionController::Parameters)
@@ -24,28 +26,28 @@ class Search::Room < Search::Base
     results = ::Room.all
     if condition == 'and'
       # ノープランの時はperson_priceから計算する
-      results = results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.person_price <= ?', price.to_i) if price.present? && plan.to_i == 1
+      results = results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.person_price <= ?', price.to_i) if price.present? && plans.to_i == 1
       # プラン選択時にはプラン料金から計算する
       results = results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id',
                               'JOIN plan_rooms ON plan_rooms.room_id = rooms.id',
-                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ? AND plans.price / apply_count <= ?', plan.to_i, price.to_i) if price.present? && plan.to_i != 1
-      results = results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.expect_count = ? OR (class_rooms.expect_count = ? AND class_rooms.can_add_bed = ?)', person.to_i, person.to_i+ 1, true) if person.present?
+                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ? AND plans.price / apply_count <= ?', plans.to_i, price.to_i) if price.present? && plans.to_i != 1
+      results = results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.expect_count = ? OR (class_rooms.expect_count = ? AND class_rooms.can_add_bed = ?)', person.to_i, person.to_i - 1, true) if person.present?
       results = results.joins('JOIN plan_rooms ON plan_rooms.room_id = rooms.id',
-                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ?', plan.to_i)
+                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ?', plans.to_i)
       results = results.where(room_number: Reservation.emptyRoomNumberListByDate(start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))) if start_date.present? && end_date.present?
     end
     if condition == 'or'
       result_ids = []
       # ノープランの時はperson_priceから計算する
-      result_ids.push(results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.person_price <= ?', price.to_i).pluck(:id)) if price.present? && plan.to_i == 1
+      result_ids.push(results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.person_price <= ?', price.to_i).pluck(:id)) if price.present? && plans.to_i == 1
       # プラン選択時にはプラン料金から計算する
       result_ids.push(results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id',
                               'JOIN plan_rooms ON plan_rooms.room_id = rooms.id',
-                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ? AND plans.price / apply_count <= ?', plan.to_i, price.to_i).pluck(:id)) if price.present? && plan.to_i != 1
+                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ? AND plans.price / apply_count <= ?', plans.to_i, price.to_i).pluck(:id)) if price.present? && plans.to_i != 1
       result_ids.push(results.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').where('class_rooms.expect_count = ? OR (class_rooms.expect_count = ? AND class_rooms.can_add_bed = ?)', person.to_i, person.to_i+ 1, true).pluck(:id)) if person.present?
       # ノープランはどの部屋にもあるので検索条件から外す
       result_ids.push(results.joins('JOIN plan_rooms ON plan_rooms.room_id = rooms.id',
-                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ?', plan.to_i).pluck(:id)) if plan.to_i != 1
+                              'JOIN plans ON plans.id = plan_rooms.plan_id').where('plans.id = ?', plans.to_i).pluck(:id)) if plans.to_i != 1
       result_ids.push(results.where(room_number: Reservation.emptyRoomNumberListByDate(start_date.strftime('%Y-%m-%d'), end_date.strftime('%Y-%m-%d'))).pluck(:id)) if start_date.present? && end_date.present?
       result_ids.flatten!
       result_ids.uniq!
