@@ -1,6 +1,7 @@
 <h1>予約一覧</h1>
 <table>
   <tr>
+    <th>予約番号</th>
     <th>部屋番号</th>
     <th>宿泊人数</th>
     <th>価格</th>
@@ -10,6 +11,7 @@
   <% @reservations.each do |reservation| %>
     <% if reservation.is_extend == false %>
       <tr>
+        <td><%= link_to reservation.id, reservation %></td>
         <td><%= reservation.room_number %></td>
         <td><%= reservation.guest_count %></td>
         <td><%= reservation.sum_price %></td>

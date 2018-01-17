@@ -20,9 +20,20 @@ class Reservation < ActiveRecord::Base
   has_many :plans
   has_many :members
 
+  def self.searchExtendId(member_id, room_id, first_id)
+    extendIds = []
+    @reservation = Reservation.find(first_id)
+    while @reservation.present?
+      insertId = @reservation.id
+      extendIds.push(insertId)
+      @reservation = Reservation.where(member_id: member_id, room_id: room_id, start_date: @reservation.end_date).first
+    end
+    logger.debug(extendIds)
+    return extendIds
+  end
+
   def self.changeEndDateFromExtend(member_id)
-    @reservations = Reservation.joins('INNER JOIN rooms ON rooms.id = reservations.room_id')
-                                   .select('reservations.*, rooms.*').where(member_id: member_id)
+    @reservations = Reservation.joins('INNER JOIN rooms ON rooms.id = reservations.room_id').select('reservations.*, rooms.room_number').where(member_id: member_id)
     @reservations.each do |reservation|
       # 連泊している宿泊データは結合する
       if reservation.is_extend == false
@@ -32,11 +43,13 @@ class Reservation < ActiveRecord::Base
             # 部屋が同じで宿泊期間が隣接していたら同じ宿泊データとして宿泊機関を結合する
             if extend.start_date == reservation.end_date && extend.room_id == reservation.room_id
               reservation.end_date = extend.end_date
+              reservation.sum_price += extend.sum_price
             end
           end
         end
       end
     end
+    logger.debug(Reservation.all.inspect)
     return @reservations
   end
   def self.isEmptyRoomByRoomNumber(room_number, date)

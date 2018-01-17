@@ -4,6 +4,12 @@ class ReservationsController < ApplicationController
   end
 
   def show
+    @reservation = Reservation.find(params[:id])
+    @reservationIds = Reservation.searchExtendId(session[:member_id], @reservation.room_id, params[:id])
+    @reservations = Reservation.joins('JOIN rooms ON rooms.id = reservations.room_id',
+                                     'JOIN plans ON reservations.plan_id = plans.id')
+                     .select('rooms.room_number, plans.name, reservations.*').find(@reservationIds)
+    logger.debug(@reservations.inspect)
   end
 
   def new
@@ -44,13 +50,14 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-  end
-
   def destroy
+    @reservation = Reservation.find(params[:id])
+    @extend_reservation = Reservation.where(start_date: @reservation.end_date).first
+    if @extend_reservation.present?
+      @extend_reservation.update_attribute(:is_extend, false)
+    end
+    @reservation.destroy
+    redirect_to :reservations, notice: '削除しました。'
   end
 
   def reservation_params

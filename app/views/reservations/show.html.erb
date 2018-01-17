@@ -1,2 +1,23 @@
-<h1>Reservation#show</h1>
-<p>Find me in app/views/reservation/show.html.erb</p>
+<h1>予約詳細</h1>
+<table>
+  <tr>
+    <th>部屋番号</th>
+    <th>宿泊人数</th>
+    <th>価格</th>
+    <th>チェックイン日</th>
+    <th>チェックアウト日</th>
+    <th>選択プラン</th>
+  </tr>
+  <% @reservations.each do |reservation| %>
+    <tr>
+      <td><%= reservation.room_number %></td>
+      <td><%= reservation.guest_count %></td>
+      <td><%= reservation.sum_price %></td>
+      <td><%= reservation.start_date %></td>
+      <td><%= reservation.end_date %></td>
+      <td><%= reservation.name %></td>
+      <td><%= link_to '削除', reservation, method: :delete,
+                     data: { confirm: '本当に削除しますか?' } %></td>
+    </tr>
+  <% end %>
+</table>
