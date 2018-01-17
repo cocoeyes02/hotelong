@@ -1,0 +1,27 @@
+<h1>予約入力画面</h1>
+
+<%= form_for @reservation, url: confirm_reservations_path do |form| %>
+  <table>
+    <tr>
+      <th><%= form.label :guest_count, '宿泊人数'%></th>
+      <td><%= form.text_field :guest_count %>人</td>
+    </tr>
+    <tr>
+      <th><%= form.label :plan_id, 'プラン' %></th>
+      <td><%= form.select :plan_id, @options %></td>
+    </tr>
+    <tr>
+      <th><%= form.label :date, '宿泊期間' %></th>
+      <td><%= form.date_select :start_date,
+                               start_year: Date.today.year, start_month: Date.today.month,
+                               start_day: Date.today.day, use_month_numebrs: true %>〜
+        <%= form.date_select :end_date,
+                             start_year: Date.today.year, start_month: Date.today.month,
+                             start_day: Date.today.day + 1, use_month_numebrs: true %></td>
+    </tr>
+    <%= form.hidden_field :member_id, :value => @member_id %>
+    <%= form.hidden_field :room_id, :value => @room_id %>
+  </table>
+  <p><%= form.submit '確認画面へ'%></p>
+<% end %>
+<button type="button" onclick="history.back()">戻る</button>
