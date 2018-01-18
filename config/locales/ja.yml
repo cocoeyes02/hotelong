@@ -9,6 +9,7 @@ ja:
     attributes:
       member:
         user_id: ユーザ名
+        hashed_password: パスワード
         password: パスワード
         name: 本名
         sex: 性別
