@@ -1,0 +1,40 @@
+ja:
+  activerecord:
+    models:
+      member: 会員情報
+      plan: プラン情報
+      room: 部屋情報
+      reservation: 予約情報
+      class_room: 部屋詳細情報
+    attributes:
+      member:
+        user_id: ユーザ名
+        password: パスワード
+        name: 本名
+        sex: 性別
+        sex_0: 男
+        sex_1: 女
+        address: 住所
+        tel: 電話番号
+        birthday: 生年月日
+        email: メールアドレス
+        admin_authority: 管理者権限
+      plan:
+        name: プラン名
+        apply_count: 適応人数
+        price: 価格
+      reservation:
+        guest_count: 宿泊人数
+        sum_price: 合計金額
+        start_date: チェックイン日
+        end_date: チェックアウト日
+        is_extend: 延泊フラグ
+      room:
+        room_number: 部屋番号
+      class_room:
+        person_price: 一人あたりの値段
+        style_name: スタイル
+        expect_count: 標準宿泊人数
+        can_add_bed: エキストラベッド
+        discount_rate: 割引率
+        surcharge_rate: 割増率
