@@ -13,8 +13,6 @@ class RoomsController < ApplicationController
     @options = PlanRoom.joins('JOIN plans ON plans.id = plan_rooms.plan_id').select('plans.*').where('plan_rooms.room_id = ?', params[:id]).pluck('plans.name, plans.id')
     session[:options] = @options
     session[:room] = @room.id
-    # TODO: ログイン情報から取得
-    session[:members] = 1
   end
 
   def search

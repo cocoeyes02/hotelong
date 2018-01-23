@@ -17,7 +17,7 @@ class ReservationsController < ApplicationController
     # TODO: セッションがなかった時のエラー処理
     @options = session[:options]
     @room_id = session[:room]
-    @member_id = session[:members]
+    @member_id = session[:member_id]
   end
 
   def confirm
@@ -27,7 +27,7 @@ class ReservationsController < ApplicationController
     plan = Plan.find_by(id: @reservation.plan_id)
     @plan_name = plan.name
     @room_id = session[:room]
-    @member_id = session[:members]
+    @member_id = session[:member_id]
     stay_date = @reservation.end_date - @reservation.start_date
     if @reservation.plan_id.to_i == 1
       sum_price = Room.calculate_sum_price(@reservation.room_id.to_i, @reservation.guest_count.to_i) * stay_date
