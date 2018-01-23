@@ -14,8 +14,10 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 gem 'rails-i18n'
-gem 'bootstrap', '~> 4.0.0.beta2.1'
+gem 'bootstrap', '4.0.0.alpha6'
 gem 'jquery-rails'
+gem 'popper_js', '~> 1.12.3'
+gem 'rails-assets-tether', '>= 1.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
