@@ -14,7 +14,7 @@ class MembersController < ApplicationController
   def create
     @member = Member.new(member_params)
     if @member.save
-      redirect_to :root, notice: '新規会員登録が完了しました。'
+      redirect_to :root, info: '新規会員登録が完了しました。'
     else
       render 'new'
     end
@@ -28,7 +28,7 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
     @member.assign_attributes(member_params)
     if @member.save
-      redirect_to @member, notice: '会員情報を更新しました。'
+      redirect_to @member, info: '会員情報を更新しました。'
     else
       render 'edit'
     end
@@ -37,7 +37,7 @@ class MembersController < ApplicationController
   def destroy
     @member = Member.find(params[:id])
     @member.destroy
-    redirect_to :root, notice: '退会しました。ご利用いただきありがとうございました。'
+    redirect_to :root, info: '退会しました。ご利用いただきありがとうございました。'
   end
 
   def member_params

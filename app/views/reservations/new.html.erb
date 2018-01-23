@@ -1,18 +1,18 @@
-<h1>予約入力画面</h1>
+<h2>予約入力画面</h2>
 <%= render 'shared/errors', obj: @reservation %>
 
 <%= form_for @reservation, url: confirm_reservations_path do |form| %>
-  <table>
+  <table class="table">
     <tr>
-      <th><%= form.label :guest_count, '宿泊人数'%></th>
+      <th scope="row"><%= form.label :guest_count, '宿泊人数'%></th>
       <td><%= form.text_field :guest_count %>人</td>
     </tr>
     <tr>
-      <th><%= form.label :plan_id, 'プラン' %></th>
+      <th scope="row"><%= form.label :plan_id, 'プラン' %></th>
       <td><%= form.select :plan_id, @options %></td>
     </tr>
     <tr>
-      <th><%= form.label :date, '宿泊期間' %></th>
+      <th scope="row"><%= form.label :date, '宿泊期間' %></th>
       <td><%= form.date_select :start_date,
                                start_year: Date.today.year, start_month: Date.today.month,
                                start_day: Date.today.day, use_month_numebrs: true %>〜
@@ -23,6 +23,6 @@
     <%= form.hidden_field :member_id, :value => @member_id %>
     <%= form.hidden_field :room_id, :value => @room_id %>
   </table>
-  <p><%= form.submit '確認画面へ'%></p>
+  <p><%= form.submit '確認する', class: 'btn btn-primary' %></p>
 <% end %>
-<button type="button" onclick="history.back()">戻る</button>
+<button type="button" class="btn btn-default" onclick="history.back()">戻る</button>

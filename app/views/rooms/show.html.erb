@@ -1,11 +1,11 @@
-<h1>部屋詳細</h1>
-<table>
+<h2>部屋詳細</h2>
+<table class="table">
   <tr>
-    <th>部屋番号</th>
-    <th>一人あたりの価格</th>
-    <th>部屋の形式</th>
-    <th>標準宿泊人数</th>
-    <th>エキストラベット</th>
+    <th scope="row">部屋番号</th>
+    <th scope="row">一人あたりの価格</th>
+    <th scope="row">部屋の形式</th>
+    <th scope="row">標準宿泊人数</th>
+    <th scope="row">エキストラベット</th>
   </tr>
   <tr>
     <td><%= @room.room_number %></td>
@@ -21,11 +21,11 @@
     </td>
   </tr>
 </table>
-<table>
+<table class="table">
   <tr>
-    <th>指定できるプラン</th>
-    <th>価格</th>
-    <th>宿泊人数</th>
+    <th scope="row">指定できるプラン</th>
+    <th scope="row">価格</th>
+    <th scope="row">宿泊人数</th>
   </tr>
   <% @plans.each do |plan| %>
     <% # ノープランは表示しない
@@ -34,17 +34,11 @@
     end
     %>
     <tr>
-      <td>
-        <%= plan.name %>
-      </td>
-      <td>
-        <%= plan.price %>
-      </td>
-      <td>
-        <%= plan.apply_count %>
-      </td>
+      <td><%= plan.name %></td>
+      <td><%= plan.price %></td>
+      <td><%= plan.apply_count %></td>
     </tr>
   <% end %>
 </table>
-<p><%= link_to 'この部屋に宿泊する', :new_reservation, class: "btn btn-lg btn-primary" %></p>
-<a href="javascript:history.back();">戻る</a>
+<p><%= link_to 'この部屋に宿泊する', :new_reservation, class: "btn btn-primary" %></p>
+<button type="button" class="btn btn-default" onclick="history.back()">戻る</button>

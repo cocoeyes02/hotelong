@@ -1,12 +1,12 @@
-<h1>予約一覧</h1>
-<table>
+<h2>予約一覧</h2>
+<table class="table">
   <tr>
-    <th>予約番号</th>
-    <th>部屋番号</th>
-    <th>宿泊人数</th>
-    <th>価格</th>
-    <th>チェックイン日</th>
-    <th>チェックアウト日</th>
+    <th scope="row">予約番号</th>
+    <th scope="row">部屋番号</th>
+    <th scope="row">宿泊人数</th>
+    <th scope="row">価格</th>
+    <th scope="row">チェックイン日</th>
+    <th scope="row">チェックアウト日</th>
   </tr>
   <% @reservations.each do |reservation| %>
     <% if reservation.is_extend == false %>

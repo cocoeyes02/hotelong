@@ -44,7 +44,7 @@ class ReservationsController < ApplicationController
     is_extend = Reservation.isExtendOrNot(@reservation.member_id.to_i, @reservation.start_date)
     @reservation.is_extend = is_extend
     if @reservation.save
-      redirect_to rooms_path, notice: '宿泊予約が完了しました。'
+      redirect_to rooms_path, info: '宿泊予約が完了しました。'
     else
       render 'new'
     end
@@ -57,7 +57,7 @@ class ReservationsController < ApplicationController
       @extend_reservation.update_attribute(:is_extend, false)
     end
     @reservation.destroy
-    redirect_to :reservations, notice: '削除しました。'
+    redirect_to :reservations, info: '削除しました。'
   end
 
   def reservation_params

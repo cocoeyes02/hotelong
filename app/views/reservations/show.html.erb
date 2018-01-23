@@ -1,12 +1,12 @@
-<h1>予約詳細</h1>
+<h2>予約詳細</h2>
 <table>
   <tr>
-    <th>部屋番号</th>
-    <th>宿泊人数</th>
-    <th>価格</th>
-    <th>チェックイン日</th>
-    <th>チェックアウト日</th>
-    <th>選択プラン</th>
+    <th scope="row">部屋番号</th>
+    <th scope="row">宿泊人数</th>
+    <th scope="row">価格</th>
+    <th scope="row">チェックイン日</th>
+    <th scope="row">チェックアウト日</th>
+    <th scope="row">選択プラン</th>
   </tr>
   <% @reservations.each do |reservation| %>
     <tr>
@@ -16,7 +16,7 @@
       <td><%= reservation.start_date %></td>
       <td><%= reservation.end_date %></td>
       <td><%= reservation.name %></td>
-      <td><%= link_to '削除', reservation, class: "btn btn-lg btn-primary", method: :delete,
+      <td><%= link_to '削除', reservation, class: 'btn btn-danger', method: :delete,
                      data: { confirm: '本当に削除しますか?' } %></td>
     </tr>
   <% end %>

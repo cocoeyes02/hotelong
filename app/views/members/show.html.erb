@@ -1,16 +1,16 @@
-<h1>会員確認画面</h1>
+<h2>会員確認画面</h2>
 
-<table>
+<table class="table">
   <tr>
-    <th>ユーザ名</th>
+    <th scope="row">ユーザ名</th>
     <td><%= @member.user_id %></td>
   </tr>
   <tr>
-    <th>名前</th>
+    <th scope="row">名前</th>
     <td><%= @member.name %></td>
   </tr>
   <tr>
-    <th>性別</th>
+    <th scope="row">性別</th>
     <td>
       <% if @member.sex == 0 %>
           男
@@ -20,26 +20,26 @@
     </td>
   </tr>
   <tr>
-    <th>電話</th>
+    <th scope="row">電話</th>
     <td><%= @member.tel %></td>
   </tr>
   <tr>
-    <th>住所</th>
+    <th scope="row">住所</th>
     <td><%= @member.address %></td>
   </tr>
   <tr>
-    <th>生年月日</th>
+    <th scope="row">生年月日</th>
     <td><%= @member.birthday %></td>
   </tr>
   <tr>
-    <th>メールアドレス</th>
+    <th scope="row">メールアドレス</th>
     <td><%= @member.email %></td>
   </tr>
 </table>
 
 <div>
-  <p><%= link_to '編集', [:edit, @member], class: "btn btn-lg btn-primary" %></p>
-  <p><%= link_to '削除', @member, class: "btn btn-lg btn-primary", method: :delete,
-                data: { confirm: '本当に削除しますか?' } %></p>
-  <button type="button" onclick="history.back()">戻る</button>
+  <p><%= link_to '編集', [:edit, @member], class: 'btn btn-primary' %></p>
+  <p><%= link_to '退会', @member, class: 'btn btn-danger', method: :delete,
+                data: { confirm: '本当に退会しますか?' } %></p>
+  <button type="button" class="btn btn-default" onclick="history.back()">戻る</button>
 </div>

@@ -1,29 +1,29 @@
-<h1>予約入力確認画面</h1>
+<h2>予約入力確認画面</h2>
 
 <%= form_for @reservation do |form| %>
-  <table>
+  <table class="table">
     <tr>
-      <th><%= form.label :room_number, '部屋番号'%></th>
+      <th scope="row"><%= form.label :room_number, '部屋番号'%></th>
       <td><%= @room_number %></td>
       <%= form.hidden_field :room_number, :value => @room_number %>
     </tr>
     <tr>
-      <th><%= form.label :guest_count, '宿泊人数'%></th>
+      <th scope="row"><%= form.label :guest_count, '宿泊人数'%></th>
       <td><%= @reservation.guest_count %>人</td>
       <%= form.hidden_field :guest_count, :value => @reservation.guest_count %>
     </tr>
     <tr>
-      <th><%= form.label :sum_price, '宿泊料金'%></th>
+      <th scope="row"><%= form.label :sum_price, '宿泊料金'%></th>
       <td><%= @sum_price %></td>
       <%= form.hidden_field :sum_price, :value => @sum_price %>
     </tr>
     <tr>
-      <th><%= form.label :plan_name, '選択プラン' %></th>
+      <th scope="row"><%= form.label :plan_name, '選択プラン' %></th>
       <td><%= @plan_name %></td>
       <%= form.hidden_field :plan_id, :value => @reservation.plan_id %>
     </tr>
     <tr>
-      <th><%= form.label :date, '宿泊期間' %></th>
+      <th scope="row"><%= form.label :date, '宿泊期間' %></th>
       <td><%= @reservation.start_date %> 〜 <%= @reservation.end_date %></td>
       <%= form.hidden_field :start_date, :value => @reservation.start_date %>
       <%= form.hidden_field :end_date, :value => @reservation.end_date %>
@@ -31,6 +31,6 @@
     <%= form.hidden_field :member_id, :value => @member_id %>
     <%= form.hidden_field :room_id, :value => @room_id %>
   </table>
-  <p><%= form.submit '予約する' %></p>
+  <p><%= form.submit '予約する', class: 'btn btn-primary' %></p>
 <% end %>
-<button type="button" onclick="history.back()">戻る</button>
+<button type="button" class="btn btn-default" onclick="history.back()">戻る</button>
