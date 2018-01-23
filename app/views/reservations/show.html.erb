@@ -16,7 +16,7 @@
       <td><%= reservation.start_date %></td>
       <td><%= reservation.end_date %></td>
       <td><%= reservation.name %></td>
-      <td><%= link_to '削除', reservation, method: :delete,
+      <td><%= link_to '削除', reservation, class: "btn btn-lg btn-primary", method: :delete,
                      data: { confirm: '本当に削除しますか?' } %></td>
     </tr>
   <% end %>

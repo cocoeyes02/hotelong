@@ -38,8 +38,8 @@
 </table>
 
 <div>
-  <p><%= link_to '編集', [:edit, @member] %></p>
-  <p><%= link_to '削除', @member, method: :delete,
+  <p><%= link_to '編集', [:edit, @member], class: "btn btn-lg btn-primary" %></p>
+  <p><%= link_to '削除', @member, class: "btn btn-lg btn-primary", method: :delete,
                 data: { confirm: '本当に削除しますか?' } %></p>
   <button type="button" onclick="history.back()">戻る</button>
 </div>

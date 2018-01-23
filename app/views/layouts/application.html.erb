@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div id="container">
+<div class="container">
   <div id="header">
     <%= render 'shared/header' %>
   </div>
@@ -16,9 +16,6 @@
       <p class="notice"><%= flash.notice %></p>
     <% end %>
     <%= yield %>
-  </div>
-  <div id="footer">
-    <%= render 'shared/footer' %>
   </div>
 </div>
 </body>
