@@ -1,0 +1,27 @@
+<h2>予約一覧</h2>
+<table class="table">
+  <tr>
+    <th scope="row">予約番号</th>
+    <th scope="row">予約者ID</th>
+    <th scope="row">予約者名</th>
+    <th scope="row">部屋番号</th>
+    <th scope="row">宿泊人数</th>
+    <th scope="row">価格</th>
+    <th scope="row">チェックイン日</th>
+    <th scope="row">チェックアウト日</th>
+  </tr>
+  <% @reservations.each do |reservation| %>
+    <% if reservation.is_extend == false %>
+      <tr>
+        <td><%= link_to reservation.id, [:admin, reservation] %></td>
+        <td><%= reservation.user_id %></td>
+        <td><%= reservation.name %></td>
+        <td><%= reservation.room_number %></td>
+        <td><%= reservation.guest_count %></td>
+        <td><%= reservation.sum_price %></td>
+        <td><%= reservation.start_date %></td>
+        <td><%= reservation.end_date %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

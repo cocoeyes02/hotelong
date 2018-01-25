@@ -2,6 +2,8 @@
 <table>
   <tr>
     <th scope="row">部屋番号</th>
+    <th scope="row">予約者ID</th>
+    <th scope="row">予約者名</th>
     <th scope="row">宿泊人数</th>
     <th scope="row">価格</th>
     <th scope="row">チェックイン日</th>
@@ -11,12 +13,14 @@
   <% @reservations.each do |reservation| %>
     <tr>
       <td><%= reservation.room_number %></td>
+      <td><%= reservation.user_id %></td>
+      <td><%= reservation.name %></td>
       <td><%= reservation.guest_count %></td>
       <td><%= reservation.sum_price %></td>
       <td><%= reservation.start_date %></td>
       <td><%= reservation.end_date %></td>
       <td><%= reservation.name %></td>
-      <td><%= link_to '削除', reservation, class: 'btn btn-danger', method: :delete,
+      <td><%= link_to '削除', [:admin, reservation], class: 'btn btn-danger', method: :delete,
                      data: { confirm: '本当に削除しますか?' } %></td>
     </tr>
   <% end %>

@@ -45,11 +45,23 @@ class Reservation < ActiveRecord::Base
   end
 
   def self.changeEndDateFromExtend(member_id)
-    @reservations = Reservation.joins('INNER JOIN rooms ON rooms.id = reservations.room_id').select('reservations.*, rooms.room_number').where(member_id: member_id)
+    puts member_id
+    if member_id != 0
+      @reservations = Reservation.joins('JOIN rooms ON rooms.id = reservations.room_id').select('reservations.*, rooms.room_number').where(member_id: member_id)
+    else
+      # 管理画面は全部表示
+      @reservations = Reservation.joins('INNER JOIN rooms ON rooms.id = reservations.room_id',
+                                        'INNER JOIN members ON members.id = reservations.member_id').select('reservations.*, rooms.room_number, members.name, members.user_id')
+    end
     @reservations.each do |reservation|
       # 連泊している宿泊データは結合する
       if reservation.is_extend == false
-        @extend_reservation = @reservations.where(is_extend: true, member_id: member_id)
+        if member_id == 0
+          # 管理画面は全部表示
+          @extend_reservation = @reservations.where(is_extend: true, member_id: reservation.member_id)
+        else
+          @extend_reservation = @reservations.where(is_extend: true, member_id: member_id)
+        end
         if @extend_reservation.present?
           @extend_reservation.each do |extend|
             # 部屋が同じで宿泊期間が隣接していたら同じ宿泊データとして宿泊機関を結合する
@@ -61,7 +73,6 @@ class Reservation < ActiveRecord::Base
         end
       end
     end
-    logger.debug(Reservation.all.inspect)
     return @reservations
   end
   def self.isEmptyRoomByRoomNumber(room_number, date)

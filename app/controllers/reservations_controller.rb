@@ -9,7 +9,6 @@ class ReservationsController < ApplicationController
     @reservations = Reservation.joins('JOIN rooms ON rooms.id = reservations.room_id',
                                      'JOIN plans ON reservations.plan_id = plans.id')
                      .select('rooms.room_number, plans.name, reservations.*').find(@reservationIds)
-    logger.debug(@reservations.inspect)
   end
 
   def new

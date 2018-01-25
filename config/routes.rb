@@ -15,5 +15,12 @@ Rails.application.routes.draw do
     collection { post 'confirm'}
   end
 
+  namespace :admin do
+    root to: 'top#index'
+    resources :members, except: [:new, :create]
+    resources :reservations, except: [:new, :create]
+    resources :plans
+  end
+
   resources :mypage, only: [:index]
 end

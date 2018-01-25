@@ -1,0 +1,26 @@
+<h2>プラン一覧</h2>
+<table class="table">
+  <tr>
+    <th scope="row">プラン名</th>
+    <th scope="row">利用可能人数</th>
+    <th scope="row">値段</th>
+  </tr>
+  <% @plans.each do |plan| %>
+    <% # ノープランは表示しない
+       if plan.id == 1
+         next
+       end
+    %>
+    <tr>
+      <td><%= plan.name %></td>
+      <td><%= plan.apply_count %></td>
+      <td><%= plan.price %></td>
+      <td>
+        <%= link_to '編集', [:edit, :admin, plan], class: 'btn btn-primary' %>
+        <%= link_to '削除', [:admin, plan], method: :delete,
+                    data: { confirm: '本当に削除しますか?' }, class: 'btn btn-danger' %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= link_to '新規作成', :new_admin_plan, class: 'btn btn-success' %>

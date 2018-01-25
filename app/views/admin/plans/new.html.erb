@@ -1,0 +1,20 @@
+<h2>プラン作成</h2>
+<%= render 'shared/errors', obj: @plan %>
+<%= form_for [:admin, @plan] do |form| %>
+  <table class="table">
+    <tr>
+      <th scope="row"><%= form.label :name %></th>
+      <td><%= form.text_field :name %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :apply_count %></th>
+      <td><%= form.text_field :apply_count, size: 3 %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :price %></th>
+      <td><%= form.text_field :price, size: 10 %></td>
+    </tr>
+  </table>
+  <p><%= form.submit '新規作成する', class: 'btn btn-primary' %></p>
+<% end %>
+<button type="button" class="btn btn-default" onclick="history.back()">戻る</button>

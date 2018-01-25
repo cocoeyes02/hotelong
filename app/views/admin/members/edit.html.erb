@@ -1,0 +1,51 @@
+<h2>会員情報編集</h2>
+<%= render 'shared/errors', obj: @member %>
+<%= form_for [:admin, @member] do |form| %>
+  <table class="table">
+    <tr>
+      <th scope="row"><%= form.label :user_id %></th>
+      <td><%= form.text_field :user_id, size: 8 %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :name %></th>
+      <td><%= form.text_field :name %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= Member.human_attribute_name(:sex) %></th>
+      <td>
+        <%= form.radio_button :sex, 0 %>
+        <%= form.label :sex_0 %>
+        <%= form.radio_button :sex, 1 %>
+        <%= form.label :sex_1 %>
+      </td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :tel %></th>
+      <td><%= form.text_field :tel, size: 10 %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :address %></th>
+      <td><%= form.text_area :address %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :birthday, for: 'member_birthday_1i' %></th>
+      <td><%= form.date_select :birthday,
+                               start_year: 1940, end_year: Time.now.year,
+                               use_month_numbers: true %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :email %></th>
+      <td><%= form.text_field :email %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :password %></th>
+      <td><%= form.password_field :password %></td>
+    </tr>
+    <tr>
+      <th scope="row"><%= form.label :admin_authority %></th>
+      <td><%= form.check_box :admin_authority %></td>
+    </tr>
+  </table>
+  <p><%= form.submit '更新する', class: 'btn btn-primary' %></p>
+<% end %>
+<button type="button" class="btn btn-default" onclick="history.back()">戻る</button>

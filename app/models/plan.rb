@@ -14,4 +14,10 @@ class Plan < ActiveRecord::Base
   has_many :plan_rooms
   has_many :rooms, through: :plan_rooms
   belongs_to :reservation
+
+  validates :name, presence: true
+  validates :apply_count, presence: true,
+            numericality: { only_integer: true }
+  validates :price, presence: true,
+            numericality: { only_integer: true }
 end
