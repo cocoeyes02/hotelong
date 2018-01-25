@@ -40,7 +40,6 @@ class Reservation < ActiveRecord::Base
       extendIds.push(insertId)
       @reservation = Reservation.where(member_id: member_id, room_id: room_id, start_date: @reservation.end_date).first
     end
-    logger.debug(extendIds)
     return extendIds
   end
 
@@ -106,9 +105,7 @@ class Reservation < ActiveRecord::Base
                       .where('(? <= reservations.start_date AND reservations.start_date < ?) OR (? <= reservations.end_date AND reservations.end_date < ?)',
                              start_date, end_date, start_date, end_date)
                       .pluck(:room_number).uniq
-    logger.debug @no_empty_room_number_list
     @empty_room_list = Room.where.not(room_number: @no_empty_room_number_list).pluck(:room_number)
-    logger.debug @empty_room_list
     return @empty_room_list
   end
 end
