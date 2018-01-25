@@ -1,17 +1,29 @@
 class Admin::MembersController < Admin::Base
   def index
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @members = Member.all
   end
 
   def show
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @member = Member.find(params[:id])
   end
 
   def edit
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @member = Member.find(params[:id])
   end
 
   def update
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @member = Member.find(params[:id])
     @member.assign_attributes(member_params)
     if @member.save
@@ -22,6 +34,9 @@ class Admin::MembersController < Admin::Base
   end
 
   def destroy
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @member = Member.find(params[:id])
     @member.destroy
     redirect_to :admin_members, info: '会員情報を削除しました'

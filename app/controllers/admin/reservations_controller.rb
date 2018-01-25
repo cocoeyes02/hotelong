@@ -1,9 +1,15 @@
 class Admin::ReservationsController < Admin::Base
   def index
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservations = Reservation.changeEndDateFromExtend(0)
   end
 
   def show
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservation = Reservation.find(params[:id])
     @reservationIds = Reservation.searchExtendId(@reservation.member_id, @reservation.room_id, params[:id])
     @reservations = Reservation.joins('JOIN rooms ON rooms.id = reservations.room_id',
@@ -13,6 +19,9 @@ class Admin::ReservationsController < Admin::Base
   end
 
   def destroy
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservation = Reservation.find(params[:id])
     @extend_reservation = Reservation.where(start_date: @reservation.end_date).first
     if @extend_reservation.present?

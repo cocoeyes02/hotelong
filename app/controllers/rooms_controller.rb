@@ -1,11 +1,17 @@
 class RoomsController < ApplicationController
   def index
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @room = Search::Room.new
     @rooms = Room.all
     @options = Plan.pluck(:name, :id)
   end
 
   def show
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @room = Room.joins('JOIN class_rooms ON class_rooms.id = rooms.class_room_id').select(
       'rooms.*, class_rooms.person_price, class_rooms.style_name, class_rooms.expect_count, class_rooms.can_add_bed'
     ).find(params[:id])
@@ -16,6 +22,9 @@ class RoomsController < ApplicationController
   end
 
   def search
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @options = Plan.pluck(:name, :id)
     @room = Search::Room.new(search_params)
     @rooms = @room

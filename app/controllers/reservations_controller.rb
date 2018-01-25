@@ -1,9 +1,15 @@
 class ReservationsController < ApplicationController
   def index
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservations = Reservation.changeEndDateFromExtend(session[:member_id])
   end
 
   def show
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservation = Reservation.find(params[:id])
     @reservationIds = Reservation.searchExtendId(session[:member_id], @reservation.room_id, params[:id])
     @reservations = Reservation.joins('JOIN rooms ON rooms.id = reservations.room_id',
@@ -12,6 +18,9 @@ class ReservationsController < ApplicationController
   end
 
   def new
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservation = Reservation.new()
     # TODO: セッションがなかった時のエラー処理
     @options = session[:options]
@@ -20,6 +29,9 @@ class ReservationsController < ApplicationController
   end
 
   def confirm
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservation = Reservation.new(reservation_params)
     room = Room.find_by(id: @reservation.room_id)
     @room_number = room.room_number
@@ -38,6 +50,9 @@ class ReservationsController < ApplicationController
   end
 
   def create
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservation = Reservation.new(reservation_confirm_params)
     # 延泊だったら延泊フラグを立てる
     is_extend = Reservation.isExtendOrNot(@reservation.member_id.to_i, @reservation.start_date)
@@ -50,6 +65,9 @@ class ReservationsController < ApplicationController
   end
 
   def destroy
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @reservation = Reservation.find(params[:id])
     @extend_reservation = Reservation.where(start_date: @reservation.end_date).first
     if @extend_reservation.present?

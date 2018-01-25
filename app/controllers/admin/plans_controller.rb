@@ -1,13 +1,22 @@
 class Admin::PlansController < Admin::Base
   def index
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @plans = Plan.all
   end
 
   def new
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @plan = Plan.new()
   end
 
   def create
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @plan = Plan.new(plan_params)
     if @plan.save
       redirect_to :admin_plans, info: '宿泊予約が完了しました。'
@@ -17,10 +26,16 @@ class Admin::PlansController < Admin::Base
   end
 
   def edit
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @plan = Plan.find(params[:id])
   end
 
   def update
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @plan = Plan.find(params[:id])
     @plan.assign_attributes(plan_params)
     if @plan.save
@@ -31,6 +46,9 @@ class Admin::PlansController < Admin::Base
   end
 
   def destroy
+    if !current_member
+      redirect_to :root, danger: 'ログインしてください。'
+    end
     @plan = Plan.find(params[:id])
     @plan.destroy
     redirect_to :admin_plans, info: 'プラン情報を削除しました'
