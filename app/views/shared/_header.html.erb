@@ -6,14 +6,34 @@
   </p>
 
   <ul class="nav nav-tabs">
-    <% if controller.kind_of?(Admin::Base) %>
+    <li class="nav-item">
+      <% if controller.controller_name != 'rooms' %>
+        <%= link_to '部屋一覧', :rooms, class: 'nav-link' %>
+      <% else %>
+        <p class="nav-link active">部屋一覧</p>
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <% if controller.controller_name != 'plans' %>
+        <%= link_to 'プラン一覧', :plans, class: 'nav-link' %>
+      <% else %>
+        <p class="nav-link active">プラン一覧</p>
+      <% end %>
+    </li>
+    <li class="nav-item">
+      <% if controller.controller_name != 'mypage' %>
+        <%= link_to 'マイページ', mypage_index_path, class: 'nav-link' %>
+      <% else %>
+        <p class="nav-link active">マイページ</p>
+      <% end %>
+    </li>
+    <% if current_member.admin_authority? %>
       <li class="nav-item">
-        <% if controller.controller_name != 'top' %>
-            <%= link_to '管理TOP', :admin_root, class: 'nav-link' %>
-        <% else %>
-            <p class="nav-link active">管理TOP</p>
-        <% end %>
+        <%= link_to '管理TOP', :admin_root, class: 'nav-link' %>
       </li>
+    <% end %>
+
+    <% if controller.kind_of?(Admin::Base) %>
       <li class="nav-item">
         <% if controller.controller_name != 'members' %>
             <%= link_to '会員管理', :admin_members, class: 'nav-link' %>
@@ -35,35 +55,6 @@
             <p class="nav-link active">プラン管理</p>
         <% end %>
       </li>
-
-    <% else %>
-
-      <li class="nav-item">
-        <% if controller.controller_name != 'rooms' %>
-          <%= link_to '部屋一覧', :rooms, class: 'nav-link' %>
-        <% else %>
-          <p class="nav-link active">部屋一覧</p>
-        <% end %>
-      </li>
-      <li class="nav-item">
-        <% if controller.controller_name != 'plans' %>
-          <%= link_to 'プラン一覧', :plans, class: 'nav-link' %>
-        <% else %>
-          <p class="nav-link active">プラン一覧</p>
-        <% end %>
-      </li>
-      <li class="nav-item">
-        <% if controller.controller_name != 'mypage' %>
-          <%= link_to 'マイページ', mypage_index_path, class: 'nav-link' %>
-        <% else %>
-          <p class="nav-link active">マイページ</p>
-        <% end %>
-      </li>
-      <% if current_member.admin_authority? %>
-        <li class="nav-item">
-          <%= link_to '管理ページ', :admin_root, class: 'nav-link' %>
-        </li>
-      <% end %>
     <% end %>
   </ul>
   <br/>
